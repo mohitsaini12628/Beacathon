@@ -59,6 +59,7 @@ static NSString * const kRWTStoredItemsKey = @"storedItems";
         for (NSData *itemData in storedItems) {
             RWTItem *item = [NSKeyedUnarchiver unarchiveObjectWithData:itemData];
             [self.items addObject:item];
+            [self startMonitoringItem:item];
         }
     }
 }
@@ -71,6 +72,7 @@ static NSString * const kRWTStoredItemsKey = @"storedItems";
     return beaconRegion;
 }
 
+#pragma mark - Monitoring functions:
 - (void)startMonitoringItem:(RWTItem *)item {
     CLBeaconRegion *beaconRegion = [self beaconRegionWithItem:item];
     [self.locationManager startMonitoringForRegion:beaconRegion];
@@ -111,8 +113,11 @@ static NSString * const kRWTStoredItemsKey = @"storedItems";
     return YES;
 }
 
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
+        RWTItem *itemToRemove = [self.items objectAtIndex:indexPath.row];
+        [self stopMonitoringItem:itemToRemove];
         [tableView beginUpdates];
         [self.items removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -130,5 +135,36 @@ static NSString * const kRWTStoredItemsKey = @"storedItems";
     UIAlertView *detailAlert = [[UIAlertView alloc] initWithTitle:@"Details" message:detailMessage delegate:nil cancelButtonTitle:@"Close" otherButtonTitles:nil];
     [detailAlert show];
 }
+
+#pragma mark - CLLocationManagerDelegate
+
+
+- (void)locationManager:(CLLocationManager *)manager monitoringDidFailForRegion:(CLRegion *)region withError:(NSError *)error {
+    NSLog(@"Failed monitoring region: %@", error);
+}
+
+- (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
+    NSLog(@"Location manager failed: %@", error);
+}
+
+- (void)locationManager:(CLLocationManager *)manager
+        didRangeBeacons:(NSArray *)beacons
+               inRegion:(CLBeaconRegion *)region
+{
+    NSLog(@"Location manager result: %@ for region: %@", beacons, region);
+    
+    for (CLBeacon *beacon in beacons) {
+        for (RWTItem *item in self.items) {
+            // Determine if item is equal to ranged beacon
+            
+            if ([item isEqualToCLBeacon:beacon]) {
+                item.lastSeenBeacon = beacon;
+            }
+        }
+    }
+}
+
+
+
 
 @end

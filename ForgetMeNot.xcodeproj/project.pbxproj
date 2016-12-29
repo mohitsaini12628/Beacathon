@@ -215,6 +215,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Ray Wenderlich Tutorial Team";
 				TargetAttributes = {
+					83EC54AA1898DD3600EA1765 = {
+						DevelopmentTeam = BJD7244BS3;
+					};
 					83EC54CB1898DD3600EA1765 = {
 						TestTargetID = 83EC54AA1898DD3600EA1765;
 					};
@@ -397,9 +400,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = BJD7244BS3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ForgetMeNot/ForgetMeNot-Prefix.pch";
 				INFOPLIST_FILE = "ForgetMeNot/ForgetMeNot-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.ForgetMeNo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -410,9 +415,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = BJD7244BS3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ForgetMeNot/ForgetMeNot-Prefix.pch";
 				INFOPLIST_FILE = "ForgetMeNot/ForgetMeNot-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = com.raywenderlich.ForgetMeNo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

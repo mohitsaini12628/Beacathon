@@ -17,6 +17,10 @@
 @property (strong, nonatomic, readonly) NSUUID *uuid;
 @property (assign, nonatomic, readonly) CLBeaconMajorValue majorValue;
 @property (assign, nonatomic, readonly) CLBeaconMinorValue minorValue;
+@property (strong, nonatomic) CLBeacon *lastSeenBeacon;
+
+
+- (BOOL)isEqualToCLBeacon:(CLBeacon *)beacon;
 
 - (instancetype)initWithName:(NSString *)name
                         uuid:(NSUUID *)uuid
